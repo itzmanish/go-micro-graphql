@@ -8,7 +8,7 @@ syntax = "proto3";
 
 package graphql;
 
-option go_package = "github.com/ysugimoto/grpc-graphql-gateway/graphql";
+option go_package = "github.com/itzmanish/micro-graphql-gateway/graphql";
 
 import "google/protobuf/descriptor.proto";
 
@@ -24,11 +24,9 @@ import "google/protobuf/descriptor.proto";
 //    ... some rpc definitions
 // }
 message GraphqlService {
-  // gRPC default connection host.
-  // This value should include host and port, say localhost:50051.
-  string host = 1;
-  // If true, automatic connection with insecure option.
-  bool insecure = 2;
+  // service name.
+  string service_name = 1;
+  
 }
 
 

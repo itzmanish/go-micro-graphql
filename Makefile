@@ -22,7 +22,7 @@ plugin:
 		-I include/graphql \
 		--go_out=./graphql \
 		include/graphql/graphql.proto
-	mv graphql/github.com/ysugimoto/grpc-graphql-gateway/graphql/graphql.pb.go graphql/
+	mv graphql/github.com/itzmanish/micro-graphql-gateway/graphql/graphql.pb.go graphql/
 	rm -rf graphql/github.com
 
 lint:

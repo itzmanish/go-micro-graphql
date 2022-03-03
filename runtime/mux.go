@@ -8,7 +8,6 @@ import (
 	"net/http"
 
 	"github.com/graphql-go/graphql"
-	"google.golang.org/grpc"
 )
 
 type (
@@ -17,9 +16,9 @@ type (
 )
 
 type GraphqlHandler interface {
-	CreateConnection(context.Context) (*grpc.ClientConn, func(), error)
-	GetMutations(*grpc.ClientConn) graphql.Fields
-	GetQueries(*grpc.ClientConn) graphql.Fields
+	CreateConnection(ctx context.Context) interface{}
+	GetMutations(service interface{}) graphql.Fields
+	GetQueries(service interface{}) graphql.Fields
 }
 
 // ServeMux is struct can execute graphql request via incoming HTTP request.
@@ -114,21 +113,7 @@ func (s *ServeMux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	queries := graphql.Fields{}
 	mutations := graphql.Fields{}
 	for _, h := range s.handlers {
-		c, closer, err := h.CreateConnection(ctx)
-		if err != nil {
-			respondResult(w, &graphql.Result{
-				Errors: []GraphqlError{
-					{
-						Message: "Failed to create grpc connection: " + err.Error(),
-						Extensions: map[string]interface{}{
-							"code": "GRPC_CONNECT_ERROR",
-						},
-					},
-				},
-			})
-			return
-		}
-		defer closer()
+		c := h.CreateConnection(ctx)
 
 		for k, v := range h.GetQueries(c) {
 			queries[k] = v

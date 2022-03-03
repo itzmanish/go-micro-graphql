@@ -2,19 +2,19 @@ package main
 
 import (
 	"log"
-
 	"net/http"
 
-	"github.com/ysugimoto/grpc-graphql-gateway/example/greeter/greeter"
-	"github.com/ysugimoto/grpc-graphql-gateway/runtime"
+	"github.com/itzmanish/go-micro/v2/client/grpc"
+	"github.com/itzmanish/micro-graphql-gateway/example/greeter/greeter"
+	"github.com/itzmanish/micro-graphql-gateway/runtime"
 )
 
 func main() {
 	mux := runtime.NewServeMux()
-
-	if err := greeter.RegisterGreeterGraphql(mux); err != nil {
+	if err := greeter.RegisterGreeterGraphqlHandler(mux, "itzmanish.greeter", grpc.NewClient()); err != nil {
 		log.Fatalln(err)
 	}
 	http.Handle("/graphql", mux)
-	log.Fatalln(http.ListenAndServe(":8888", nil))
+	log.Println(http.ListenAndServe(":8080", nil))
+
 }

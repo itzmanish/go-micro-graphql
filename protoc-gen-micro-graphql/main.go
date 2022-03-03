@@ -10,8 +10,8 @@ import (
 	// nolint: staticcheck
 	"github.com/golang/protobuf/proto"
 	plugin "github.com/golang/protobuf/protoc-gen-go/plugin"
-	"github.com/ysugimoto/grpc-graphql-gateway/protoc-gen-graphql/generator"
-	"github.com/ysugimoto/grpc-graphql-gateway/protoc-gen-graphql/spec"
+	"github.com/itzmanish/micro-graphql-gateway/protoc-gen-micro-graphql/generator"
+	"github.com/itzmanish/micro-graphql-gateway/protoc-gen-micro-graphql/spec"
 )
 
 var version = "dev"
